@@ -83,19 +83,37 @@ function playRound(computerSelection, playerSelection)
     }
 }
 
-function game()
-{
-    for(let i = 0; i < 5; i++)
-    {
-        let computerSelection = getComputerChoice();
-        let playerSelection = prompt();
-        console.log(playRound(computerSelection, playerSelection));
-        console.log(`Wins: ${win} Losses: ${lose} Tie: ${tie}`);
+const buttons = document.querySelectorAll('.btn');
+buttons.forEach(button => button.addEventListener('click', (e) => {
+    let computerSelection = getComputerChoice();
+    let playerSelection = e.target.id;
+    content.textContent = playRound(computerSelection,playerSelection);
+    count.textContent = `Wins: ${win} Losses: ${lose} Tie: ${tie}`;
+    if (win === 5){
+        count.textContent = 'Player Wins!';
+        win = 0;
+        lose = 0;
+        tie = 0;
     }
-}
+    if (lose === 5){
+        count.textContent = 'Computer Wins!';
+        win = 0;
+        lose = 0;
+        tie = 0;
+    }
+
+
+}))
+
+
 let win = 0;
 let lose = 0;
 let tie = 0;
-game();
 
+const results = document.querySelector('#results');
 
+const count = document.createElement('div');
+count.textContent = `Wins: ${win} Losses: ${lose} Tie: ${tie}`;
+const content = document.createElement('div');
+results.appendChild(content);
+results.appendChild(count);
